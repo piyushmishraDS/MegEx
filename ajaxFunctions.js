@@ -1,47 +1,68 @@
 // functions to read and write from sql tables
 
-function getTrialNumFromTable(tableName){// counts the number of repeatitions in the task part that was played before
-	var cds,run,cT,trialNum=0;
+function getParamOfLastTableRow(tableName,paramStr){// counts the number of repetitions in the task part that was played before
+	var param
 	var xhttp;
 	xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			// myData returns
 			var myData = JSON.parse(this.responseText);
-			var len = myData.length;
-			run = Number(myData[len-1].run);
-			cT = run;
-			trialNum = 0;
-			while (cT==run && (len-trialNum)>1){
-				trialNum = trialNum+1;
-				cT = Number(myData[len-trialNum-1].run);
+			if (myData.length>0){
+				//get the param value of the last row with the current subjectId and tableName
+				param = Number(eval("myData[myData.length-1]." + paramStr));
+			}else{
+				param=-1;
 			}
 		}
 	};
-	xhttp.open("GET", "getRunAndTrialNumber.php?tableN="+tableName+"&subjectId="+exp.subjectId, false);
+	xhttp.open("GET", "getParamFromTable.php?tableName="+tableName+"&subjectId="+exp.subjectId+"&paramStr="+paramStr, false);
 	xhttp.send();
-	return trialNum;
+	return param;
 }
 
 
 function getRunNumFromTable(tableName){ // check the run number of the last trial saved to the table
-	var num;
+	var run;
 	var xhttp;
 	xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			var myData = JSON.parse(this.responseText);
-			var len = myData.length;
-			if (len>0){
-				num = Number(myData[len-1].run);
+			if (myData.length>0){
+				run = Number(myData[myData.length-1].run);
 			}else{
-				num=0;
+				run=0;
 			}
 		}
 	};
 	xhttp.open("GET", "getRunAndTrialNumber.php?tableName="+tableName+"&subjectId="+exp.subjectId, false);
 	xhttp.send();
-	return num;
+	return run;
+}
+
+function getNavigDetailsFromTable(tableName){// counts the number of repetitions in the task part that was played before
+	var trial, step, curImg, target;
+	var xhttp;
+	xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			var myData = JSON.parse(this.responseText);
+			if (myData.length>0){
+				trial = Number(myData[myData.length-1].trial);
+				step = Number(myData[myData.length-1].step);
+				curNode = Number(myData[myData.length-1].curNode);
+				targetNode = Number(myData[myData.length-1].targetNode);
+			}else{
+				trial=0;
+				step=0;
+				curNode=-1;
+				targetNode=-1;
+			}
+		}
+	};
+	xhttp.open("GET", "getRunAndTrialNumber.php?tableN="+tableName+"&subjectId="+exp.subjectId, false);
+	xhttp.send();
+	return [trial, step, curNode, targetNode];
 }
 
 
@@ -124,15 +145,30 @@ function save2learnRandomPairTable(subjectId,Tnum,npic1,npic2,rt,c,TableName){
 }
 
 
-function save2pilesTable(){//inMv12,cim1,cim2,prC
+function save2pilesTable(){
 	$.ajax({
 		type:'POST',
 		url: 'save2pilesTable.php',//'save2pileTable.php',
 		data: {subjectId: exp.subjectId, run: exp.curRun, map:exp.curMap, trial:pileObj.trial,
-    pile1Img1:pileObj.pile1Img1,pile1Img2:pileObj.pile1Img2,pile1Img3:pileObj.pile1Img3,
-		pile2Img1:pileObj.pile2Img1,pile2Img2:pileObj.pile2Img2,pile2Img3:pileObj.pile2Img3,
-		targetNode: pileObj.targetNode,response: pileObj.response,correctPile: pileObj.correctPile, answeredCorrectly: pileObj.answeredCorrectly,
-		runScore:pileObj.runScore, totalScore: exp.totalScore,rt:pileObj.rt}, // save data into the piles table in sql
+	    pile1Img1:pileObj.pile1Img1,pile1Img2:pileObj.pile1Img2,pile1Img3:pileObj.pile1Img3,
+			pile2Img1:pileObj.pile2Img1,pile2Img2:pileObj.pile2Img2,pile2Img3:pileObj.pile2Img3,
+			targetNode: pileObj.targetNode,response: pileObj.response,correctPile: pileObj.correctPile, answeredCorrectly: pileObj.answeredCorrectly,
+			runScore:pileObj.runScore, totalScore: exp.totalScore,rt:pileObj.rt}, // save data into the piles table in sql
+		async: true,
+		dataType:'json',
+		success: function(ans) {
+		}
+	});
+}
+
+function save2isMiddleTable(){
+	$.ajax({
+		type:'POST',
+		url: 'save2isMiddleTable.php',
+		data: {subjectId: exp.subjectId, run: exp.curRun, map:exp.curMap, trial:middleObj.trial,
+			img1:middleObj.img1, img2:middleObj.img2, imgMid:middleObj.imgMid,
+			response: middleObj.response, correctAns:middleObj.correctAns, answeredCorrectly: middleObj.answeredCorrectly,
+			runScore:middleObj.runScore, totalScore: exp.totalScore,rt:middleObj.rt},
 		async: true,
 		dataType:'json',
 		success: function(ans) {
@@ -164,17 +200,6 @@ function save2whichIsCloserTable(cq,iq1,iq2,corQ,RTq){//inMv12,cim1,cim2,prC, sa
 	});
 }
 
-function save2isMiddleTable(nrep,RTm,corA){
-	$.ajax({
-		type:'POST',
-		url: 'save2isMiddleTable.php',
-		data: {name: subjectId, run: exp.curRun,map:exp.curMap,nREP:nrep,pic1:ism1p,pic2:ism,pic3:ism2p,isitM:ys,corR:corA,rt:RTm,totalScore:exp.totalScore},
-		async: false,
-		dataType:'json',
-		success: function(ans) {
-		}
-	});
-}
 
 
 function calCorQ(tableName,name){// sum over the number of correct answers as save in the column 'isCorr'

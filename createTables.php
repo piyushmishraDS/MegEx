@@ -87,7 +87,7 @@ if ($conn->query($sql) === TRUE) {
 }
 
 
-// sql to create table learnRandomWalkTable (variable names need changing)
+// sql to create table learnRandomWalkTable
 $sql = "CREATE TABLE learnRandomWalkTable (
   subjectId TEXT,
   run INT,
@@ -107,7 +107,7 @@ if ($conn->query($sql) === TRUE) {
 }
 
 
-// sql to create table learnRandomWalkTable (variable names need changing)
+// sql to create table pilesTable
 $sql = "CREATE TABLE pilesTable (
   subjectId TEXT,
   run INT,
@@ -128,8 +128,24 @@ $sql = "CREATE TABLE pilesTable (
   rt FLOAT(5,3)
 )";
 
+$sql = "CREATE TABLE isMiddleTable (
+  subjectId TEXT,
+  run INT,
+  map INT,
+  trial INT,
+  img1 INT,
+  img2 INT,
+  imgMid INT,
+  response INT,
+  correctAns INT,
+  answeredCorrectly INT,
+  runScore INT,
+  totalScore INT,
+  rt FLOAT(5,3)
+)";
+
 if ($conn->query($sql) === TRUE) {
-  echo "Table pilesTable created successfully";
+  echo "Table isMiddleTable created successfully";
 } else {
   echo "Error creating table: " . $conn->error;
 }

@@ -258,9 +258,10 @@ function conExp_piles(ans){// check particpants answer
 	pileObj.response = ans;
 	var  buttonPressTime = new Date();
 	pileObj.rt = calResponseTime(buttonPressTime,pileObj.lastImgPresentTime);
-	if(ans==pileObj.correctPile){
+	if(pileObj.response==pileObj.correctPile){
 		pileObj.answeredCorrectly = 1;
 		pileObj.runScore = pileObj.runScore+1;
+		exp.totalScore = exp.totalScore+1;
 	} else {
 		pileObj.answeredCorrectly = 0;
 	}
@@ -273,7 +274,6 @@ function conExp_piles(ans){// check particpants answer
 
 
 function endPilesTask (){
-	exp.totalScore = exp.totalScore + pileObj.runScore;
 	document.getElementById("pilesTab").style.display="none";
 	document.getElementById("pilesRunScore").innerHTML=pileObj.runScore;
 	document.getElementById("totalScore").innerHTML=exp.totalScore;
@@ -285,5 +285,6 @@ function endPilesTask (){
 
 function pilesNextGame(){
 	document.getElementById("pilesScoreTab").style.display="none";
-	isItMiddle()
+	middleObj.trial = 1; // initialise Piles task to trial 1
+	isMiddle()
 }

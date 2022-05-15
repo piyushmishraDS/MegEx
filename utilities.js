@@ -74,15 +74,6 @@ function checkKeyT(e) {// subject key choice to functions responses
 		conExpQ(2);
 	}
 
-	if (e.keyCode == '13'&&flagIsM==1&&flagSp==2&&flagSs==-1){//enter
-		isItMiddle(0);
-	}
-	if (e.keyCode == '89'&&flagIsM==0&&flagSp==2&&flagSs==-1&&flagTr==1){//y
-		isItMiddleYN(1);
-	}
-	if (e.keyCode == '78'&&flagIsM==0&&flagSp==2&&flagSs==-1&&flagTr==1){//n
-		isItMiddleYN(0);
-	}
 
 	if(flagSs==0&&flagIsM==-1&&flagSp==2&&flagT==1&&flagTr==1){// for navigation task
 
@@ -145,5 +136,4 @@ function preloadImages(imageArray) {
 		images[i] = new Image();
 		images[i].src = exp.pathToImgDir + imageArray[i];
 	}
-	console.log("preloaded images")
 }

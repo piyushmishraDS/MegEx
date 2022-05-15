@@ -1,136 +1,67 @@
-function isItMiddle(nn){// is it in the middle task
-	flagSs = -1;//signal that it is not task part - important for response key function
-	flagSp=2;
-	flagCov = 0;//signal that it is not in the cover part
-	flagTr=1;//can get an answer
-    nrep=0;
-	if(nn==1){
-		y = y0;
-		x = 0;
-		clearCanvas(document.getElementById("myCanvas"),300,450);
-		ncoinT=0;
-		flagC=0;
-		if(isNestDis==1){
-			document.getElementById("nextIsM").disabled=true;
-		}
-		nrep=1;
+function isMiddle(){ // is it in the middle task
+
+	document.getElementById("isMiddleTab").style.display="inline";
+	document.getElementById("middleButtonsDiv").style.display="block";
+	document.getElementById("middleNextTrialDiv").style.display="none";
+
+	middleObj.imgMid = Math.floor(Math.random() * (G.nNodes));
+
+	// choose transition matrix to use - with or without missing links
+	if (exp.mapsVec[exp.curRun]==exp.missLinkMapNum){
+		var transMat = G.transMatMiss
 	}else{
-		nrep = nrep+1;
+		var transMat = G.transMat
 	}
+	// get two neighbours
+	[middleObj.img1,middleObj.img2]=findRandTwoNghbrs(transMat,middleObj.imgMid);
 
-	flagIsM=0;
-	/*manage display*/
-	document.getElementById("pilesTab").style.display="none";
-	document.getElementById("navig").style.display="none";
-	document.getElementById("isMiddle").style.display="inline";
-	ism = Math.floor(Math.random() * (G.nNodes));
+	middleObj.correctAns=1;
 
-	if(exp.curMap>1){
-		[ism1p,ism2p ]=findRandTwoNghbrs(G.transMatMiss,ism);
-	}else{
-		[ism1p,ism2p ]=findRandTwoNghbrs(G.transMat,ism);
-	}
-
-	var ismnew=ism;
-	var nbism,j,j2,flagNb=0;
-	ys=1;
-	if(Math.random()<0.5){//make it not in the middle
-		ys=0;
-		while(ismnew==ism1p||ism2p==ismnew||ism==ismnew||flagNb==1){//fixed for fixed Ar - I want it not to be a neighbour of both of them on the complete graph
-			ismnew = Math.floor(Math.random() * (G.nNodes));
-			nbism = Ar[ismnew];
-			flagNb=0;
-			for(j=0;j<nbism.length;j++){
-				if(ism1p==nbism[j]){
-					for(j2=0;j2<nbism.length;j2++){
-						if(ism2p==nbism[j2]){
-							flagNb=1;
-						}
-					}
-				}
+	if(Math.random()<0.5){ // trials where the image was not in the middle
+		middleObj.correctAns=0;
+		// get a random imgMid,
+		var newImgMid=middleObj.imgMid;
+		newImgMid = Math.floor(Math.random() * (G.nNodes));
+		// check it is not the img1 or img2, and also not a neighbourof both
+		while(newImgMid==middleObj.img1 || newImgMid==middleObj.img2 ||
+			(transMat[newImgMid].includes(middleObj.img1) && transMat[newImgMid].includes(middleObj.img2)) ) {
+				newImgMid = Math.floor(Math.random() * (G.nNodes));
 			}
+			middleObj.imgMid = newImgMid;
 		}
-		ism = ismnew;
+
+		middle_img1.src = exp.pathToImgDir + exp.imgFileNamesArr[middleObj.img1];
+		middle_img2.src = exp.pathToImgDir + exp.imgFileNamesArr[middleObj.img2];
+		middle_imgMid.src = exp.pathToImgDir + exp.imgFileNamesArr[middleObj.imgMid];
+
+		middleObj.imgPresentTime = new Date();
 	}
-	/* the pictures*/
-	im1.src = exp.pathToImgDir + exp.imgFileNamesArr[ism1p];
-	im2.src = exp.pathToImgDir + exp.imgFileNamesArr[ism2p];
-	im3.src = exp.pathToImgDir + exp.imgFileNamesArr[ism];
 
-	/* manage display*/
-	document.getElementById("im3").style.display="inline";
-	document.getElementById("im3div").style.display="inline";
-	document.getElementById("im3cor").style.display="none";
-	document.getElementById("im3con").style.display="none";
-
-	thisLast=new Date();
-}
-
-function isItMiddleYN(yn){// check if correct and give feedback
-	var corA;
-	var  thisTime=new Date();
-	var RTm = calResponseTime(thisTime,thisLast);
-	if(ys==yn){
-		ncoin = ncoin+1;
-		ncoinT = ncoinT+1;
-		corA =1;
-		document.getElementById("im3cor").innerHTML = "Correct!";
-		flagIsM=1;
-		document.getElementById("im3div").style.display="none";
-		document.getElementById("im3cor").style.display="inline";
-		if(ys==1){
-			document.getElementById("im3cor").style.color="green";
-		}else{
-			document.getElementById("im3cor").style.color="blue";
+	function conExp_middle(ans){// check if correct and give feedback. previouly called isItMiddleYN
+		middleObj.trial = middleObj.trial+1;
+		document.getElementById("middleButtonsDiv").style.display="none";
+		document.getElementById("middleNextTrialDiv").style.display="inline";
+		middleObj.response = ans;
+		var  buttonPressTime = new Date();
+		middleObj.rt = calResponseTime(buttonPressTime,middleObj.imgPresentTime);
+		if (middleObj.correctAns==middleObj.response){
+			middleObj.answeredCorrectly =1;
+			middleObj.runScore = middleObj.runScore+1;
+			exp.totalScore = exp.totalScore+1;
+		} else {
+			middleObj.answeredCorrectly = 0;
 		}
-		document.getElementById("im3con").style.display="inline";
-		if (flagC==0){
-			plotCircle(document.getElementById("myCanvas"),y,"blue",x);
-		}else{
-			replotCircle(document.getElementById("myCanvas"),y,x);
-		}
-		y = y-dy;
-	}else{
-		if (ncoinT>0){
-			y = y+dy;
-			ncoinT = ncoinT-1;
-		}
-		flagIsM=1;
-		ncoin = ncoin-1;
 
-		document.getElementById("im3div").style.display="none";
-		document.getElementById("im3cor").innerHTML = "NOT Correct!";
-		document.getElementById("im3cor").style.display="inline";
-		document.getElementById("im3cor").style.color="red";
-		document.getElementById("im3con").style.display="inline";
-		ncolCrc = ncolCrc-1;
-		corA=0;
-		clearCircle(document.getElementById("myCanvas"),y,x);
+		save2isMiddleTable();// save data into sql table
+		if (middleObj.trial>middleObj.maxTrial){// if number of trials exceeded middleObj.maxTrial start navigation task with intial distance 2 between current picture and target picture
+			endIsMiddle()
+		}
 	}
-	document.getElementById("ncoinP").style.display="inline";
-	document.getElementById("ncoinP").innerHTML=ncoin+" coins";
-	if(y<=0){
-		x = x+dx;
-		y = y0;
-	}
-	if(y>y0&&ncolCrc>1){
-		x = x-dx;
-		y = 0;
-	}
-	save2isMiddleTable(nrep,RTm,corA);// save data into sql table
-	if (nrep>maxIsM){// if number of trials exceeded maxIsM start navigation task with intial distance 2 between current picture and target picture
+
+	function endIsMiddle(){// go to next task
 		if(exp.curRun<9){
 			startNavigTask(2);
 		}else{
 			startWhichIsCloser(0);
 		}
 	}
-}
-
-function writeResp(){// go to next task
-	if(exp.curRun<9){
-		startNavigTask(2);
-	}else{
-		startWhichIsCloser(0);
-	}
-}

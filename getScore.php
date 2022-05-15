@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 }
 //echo "Connected successfully ";
 
-mysqli_select_db($conn,"rohiniex_meg");
+mysqli_select_db($conn,"alonbara_meg");
 
 $subjectId = $_GET['subjectId'];
 $tableName = $_GET['tableName'];

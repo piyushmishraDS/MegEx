@@ -32,9 +32,6 @@
 
   <div id="regForm">
 
-    <!-- Alon: delete canvas once all coin-related code is deleted -->
-    <canvas id="myCanvas" width="450" height="450" ></canvas>
-
     <!--start-->
     <!--subject details:-->
     <div id="startDiv" align="center" class="tab">
@@ -96,7 +93,8 @@
     <!--pile task-->
 
     <div id="pilesTab" class="tab">
-      <p id="pileIns">The following card will appear in one of the 2 piles,<br> it can appear in the pile if it is associated to the last card that appears on the pile. <br>A card cannot appear twice on the same pile.<br> Can the card appear on the first or second pile? (click 1, 2 or 3 for both)</p>
+      <p id="pileIns">The following card will appear in one of the 2 piles,<br> it can appear in the pile if it is associated to the last card that appears on the pile. <br>
+        A card cannot appear twice on the same pile.<br> Can the card appear on the first or second pile? (click 1, 2 or 3 for both)</p>
       <img id="pileTarget">
       <div id="pilesImgsDiv">
         <div id="pile1">
@@ -126,83 +124,86 @@
     </div>
 
     <div id="pilesScoreTab" class="tab" align="center">
-        <h1>End of "Which Pile of cards?" game.</h1>
-        <p>In this game you have earned <span id="pilesRunScore" class="score"></span> out of <span id="pilesMaxScore" class="score"></span> points.</p>
-        <p>Your total score is <span id="totalScore" class="score"></span>.</p>
-        <button class="button buttonNextGame" id="endPilesButton" onclick="pilesNextGame()">Next game</button>
+      <h1>End of "Which Pile of cards?" game.</h1>
+      <p>In this game you have earned <span id="pilesRunScore" class="score"></span> out of <span id="pilesMaxScore" class="score"></span> points.</p>
+      <p>Your total score is <span id="totalScore" class="score"></span>.</p>
+      <button class="button buttonNextGame" id="endPilesButton" onclick="pilesNextGame()">Next game</button>
     </div>
 
 
-      <!--is middle task-->
-      <div id="isMiddle" class="tab">
-        <center><p style="font-size: 22px">Can the card in the middle appear between the following first and third cards?</br> A card can appear in the middle only if it is associated to the 2 cards<br> Whether the first and third cards are associated to one another or not is not important. <br> <b>press y/n</b></p></center>
-        <center><div id="im1d"><p>third card</p><img id="im1"></div>
-          <div id="im2d"><p>first card</p><img id="im2"></div>
-        </center>
-        <center><p id="im3cor" style="font-size: 18px; color:red"></p></center>
-        <center><p id="im3con">Press <b>Enter</b> to continoue</p></center>
-        <center><div id="im3div"><p id="im3p"><br>Intermediate Card?</p><img id="im3"></div></center>
-
-        <button type="button" id="nextIsM" ;
-        onclick="writeResp()">Next Step</button>
+    <!--is middle task-->
+    <div id="isMiddleTab" class="tab">
+      <p id="middleIns">Can the card in the middle appear between the following first and third cards?<br> A card can appear in the middle only if it is associated to the 2 cards<br>
+        Whether the first and third cards are associated to one another or not is not important.</p>
+      <div id="middle_img1div"><p>first card</p><img id="middle_img1"></div>
+      <div id="middle_img2div"><p>third card</p><img id="middle_img2"></div>
+      <div id="middle_imgMidDiv"><p>Intermediate Card?</p><img id="middle_imgMid"></div>
+      <div id="middleButtonsDiv" align="center">
+        <button class="button buttonAnswer" id="buttonMiddleYes" align="center" onclick="conExp_middle(1)">Yes</button>
+        <button class="button buttonAnswer" id="buttonMiddleNo" align="center" onclick="conExp_middle(0)">No</button>
       </div>
-
-      <!-- Navigation Task:-->
-
-      <div id="navig" class="tab">
-
-        <!--  define instructions block -->
-        <p align="center" id="instructionsT"> </p><p id="instructionsT2"> </p>
-
-        <center><p id="dispPc">press ENTER to continue</p></center>
-        <center><p id="skip">press ENTER to skip</p></center>
-        <center><div id="tarPid"><p id="targetPic"></p><img id="tarPt"></div></center>
-        <center><div id="cPic"><p id="startPic"></p><img id="currPt"></div></center>
-        <center><div id="picT">
-
-          <img id="chPic1"/>
-          <img id="chPic2"/>
-
-        </div> </center>
-
-
-        <center> <div class="endTask"><p id="endExpReachT"></p>
-          <button type="button" id = "conBot"
-          onclick="contT(1)">
-          click here to continue to next session</button>
-          <button type="button" id = "endBot"
-          onclick="endAllTrials_navig(1)">
-          click to Finish</button>
-        </div></center>
-      </div>
-
-      <center><p id="endThanksT"></p></center>
-      <div id="LbotT" ></div> <div id="RbotT"></div>
-
-      <!-- Which is closer (previously called Where to Go or distnce estimation task)-->
-
-      <div id="whichIsCloser"  class="tab">
-
-        <!--  define instructions block -->
-        <p class="center" id="instructionsQ"> </p>
-
-        <center><div id="tarPidQ"><p id="targetPicQ"></p><img id="tarPQ"></div></center>
-
-        <center><div id="im1Q"><p>CARD 1</p><img id="Q1"></div></center>
-        <center><div id="im2Q"><p>CARD 2</p><img id="Q2"></div></center>
-
-
-        <center><p id="iqcor" style="font-size: 20px; color:red"></p></center>
-        <center><p id="iqcon">Press <b>Enter</b> to continue</p></center>
-
-      </div>
-
-      <div id="whichIsCloser_feedback" align="center" class="tab">
-        <p id="Qfeedback"></p>
-        <button type="button" id="nextBlock"
-        onclick="nextRun()">Continue</button>
+      <div id="middleNextTrialDiv" align="center">
+        <p>Your answer was recorded.</p>
+        <button class="button buttonNextTrial" id="middleNextTrialButton" onclick="isMiddle()" align="center">Next trial</button>
       </div>
     </div>
+
+    <!-- Navigation Task:-->
+
+    <div id="navig" class="tab">
+
+      <!--  define instructions block -->
+      <p align="center" id="instructionsT"> </p><p id="instructionsT2"> </p>
+
+      <center><p id="dispPc">press ENTER to continue</p></center>
+      <center><p id="skip">press ENTER to skip</p></center>
+      <center><div id="tarPid"><p id="targetPic"></p><img id="tarPt"></div></center>
+      <center><div id="cPic"><p id="startPic"></p><img id="currPt"></div></center>
+      <center><div id="picT">
+
+        <img id="chPic1"/>
+        <img id="chPic2"/>
+
+      </div> </center>
+
+
+      <center> <div class="endTask"><p id="endExpReachT"></p>
+        <button type="button" id = "conBot"
+        onclick="contT(1)">
+        click here to continue to next session</button>
+        <button type="button" id = "endBot"
+        onclick="endAllTrials_navig(1)">
+        click to Finish</button>
+      </div></center>
+    </div>
+
+    <center><p id="endThanksT"></p></center>
+    <div id="LbotT" ></div> <div id="RbotT"></div>
+
+    <!-- Which is closer (previously called Where to Go or distnce estimation task)-->
+
+    <div id="whichIsCloser"  class="tab">
+
+      <!--  define instructions block -->
+      <p class="center" id="instructionsQ"> </p>
+
+      <center><div id="tarPidQ"><p id="targetPicQ"></p><img id="tarPQ"></div></center>
+
+      <center><div id="im1Q"><p>CARD 1</p><img id="Q1"></div></center>
+      <center><div id="im2Q"><p>CARD 2</p><img id="Q2"></div></center>
+
+
+      <center><p id="iqcor" style="font-size: 20px; color:red"></p></center>
+      <center><p id="iqcon">Press <b>Enter</b> to continue</p></center>
+
+    </div>
+
+    <div id="whichIsCloser_feedback" align="center" class="tab">
+      <p id="Qfeedback"></p>
+      <button type="button" id="nextBlock"
+      onclick="nextRun()">Continue</button>
+    </div>
+  </div>
 
 
   <!-- **********************   begin javascript script   ********************-->
@@ -243,16 +244,22 @@
   lrnPrsObj.maxTrial = 150;
 
   let pileObj = new partObj
-  pileObj.maxTrial = 10;
+  pileObj.maxTrial = 15;
   // number of missing link trials (only relevant for late runs)
   pileObj.nMissLinkTrials = 2
   // number of trials where the target is not connected to either pile.
   pileObj.nNoRightAnsTrials = 2;
 
   let middleObj = new partObj
+  middleObj.maxTrial = 15;
+
   let navigObj = new partObj
   // maximum number of steps allowed in navigation. Previously called maxTask.
-  navigObj.maxSteps = 200;
+  navigObj.trial = 0;
+  navigObj.maxTrials = 4;
+  navigObj.maxSteps = 200; // max number of steps in each trial (in case subject is crap or gets lost)
+  navigObj.stepsInTrial = 0; // total num of steps in each trial (between 0 and navigObj.maxSteps)
+  navigObj.initDistVec = [2,2,3,4]; // the initial distance for each trial
 
   let whichCloserObj = new partObj
   whichCloserObj.numCorrect = 0;//number of correct responses in whichIsCloser (distance estimation questions)
@@ -266,7 +273,6 @@
   /*vriables that are specific to the adjacency matrix:*/
   /* G.dimensions are defined in the function defineGraph */
 
-  var maxdS = 4;
   var qend = 24;//20;//45;//34 - mis, 11 regular. number of distance estimation questions
 
   /* parameters for cluster Arch fixed neighbors*/
@@ -274,45 +280,19 @@
   var ninc = 7;// number of nodes in each cluster
   /*max displays during the learning phase in each block*/
 
-  var maxIsM=15;//10;
-
-  var dS;//the initial distance in the navigation task
-  /*File Name*/
-  var writeFile;
-  var payFile;
-  var mapFile;
-  var presntFile;
   /*general parameters*/
-  var sz = 20;//cycle size
-  var flagC=0
   var nSD = 2;//number of trials in which distance is given
   var nstruct = 2;//number of different map with the same structure
   var nnT;//which structure should be used
   var twait=500;
   var stType;
-  var ncolCrc=1;
   var cgetR = 0.4;
   var thisTC=-1;
 
-  /*respone ojsect*/
-  var resTArr=[];//the array of resTASK
-  var resIsMArr=[];//the array of IsItMiddle Task
-  var resSpArr=[];//the array of which pile Task
-
   /*trial variable*/
-  var nRunsNavig = 0;
   var numQ = 0;
-  var flagSp=2;
-  var flagMV=5;
-  var flagSs=-1;
-  var flagIsM = 9;
-  var flagCov = 0;
-  var flagCovP = 0;
-  var flagQ=-1;
   var timeLast,timeLast_sec,timeLast_min,timeLast_hr;//to track response time
   var endR=0;
-  var c,cend,flagSs,corR=0;
-  var inP1,inP,inPr;
 
 
   /*disable the end bottuns*/
@@ -321,16 +301,11 @@
   /*disable the next bottuns*/
   if (isNestDis==1){
     document.getElementById("endLearnWalkButton").disabled=true;
-    document.getElementById("endPilesButton").disabled=true;
+    document.getElementById("skipR").disabled=true;
     document.getElementById("nextIsM").disabled=true;
   }
   /*trial variable*/
-  var totalStep = 0;
   var in1R,in1L,inP,tar1,nSt,rowT,colT;
-
-  var ndis = 1;
-  /*array pictures objects - maps*/
-  var nmap=1;
 
   function initExp(){ // the first function to be called, formerly called starDisc()
     /*create/retrive MAPS and save in sql table*/
@@ -343,39 +318,42 @@
     }else{
       exp.subjectId = subjectId0;
     }
+
     exp.history={};
     exp.history.runNumOfLastTrialSaved2table=[];
-    exp.history.runNumOfLastTrialSaved2table[0] = getRunNumFromTable("learnRandomWalkTable"); // function getRunNumFromTable is in ajaxFunctions.js, getRunNumFromTable gives the current run of each task
-    exp.history.runNumOfLastTrialSaved2table[1] = getRunNumFromTable("isInPileTable");
-    exp.history.runNumOfLastTrialSaved2table[2] = getRunNumFromTable("isMiddleTable");
-    exp.history.runNumOfLastTrialSaved2table[3] = getRunNumFromTable("navigTable");
-    exp.history.runNumOfLastTrialSaved2table[4] = getRunNumFromTable("whichIsCloserTable");
+    // function getParamOfLastTableRow is in ajaxFunctions.js, getParamOfLastTableRow gives the current run of each task,
+    // or -1 if no runs o that tadk were completed
+    exp.history.runNumOfLastTrialSaved2table[0] = getParamOfLastTableRow("learnRandomWalkTable","run");
+    exp.history.runNumOfLastTrialSaved2table[1] = getParamOfLastTableRow("isInPileTable","run");
+    exp.history.runNumOfLastTrialSaved2table[2] = getParamOfLastTableRow("isMiddleTable","run");
+    exp.history.runNumOfLastTrialSaved2table[3] = getParamOfLastTableRow("navigTable","run");
+    exp.history.runNumOfLastTrialSaved2table[4] = getParamOfLastTableRow("whichIsCloserTable","run");
     exp.history.maxRunsPerTask = maxArr(exp.history.runNumOfLastTrialSaved2table); // this is where the subject stopped
     // if no task data has already been saved to sql
-    if (exp.history.runNumOfLastTrialSaved2table[0]==0){
+    if (exp.history.runNumOfLastTrialSaved2table[0]==-1){
       exp.curRun  = 1; // global that counts the runs - how many times did all the blocks/tasks complete.
       exp.lastMap = -1;
       exp.curMap = exp.mapsVec[0];
 
       // if some tasks have already been completed
     }  else {
-    exp.curRun = exp.history.maxRunsPerTask; // exp.curRun global that counts the runs - how many times did all the blocks/tasks complete.
-    exp.curMap = exp.mapsVec[exp.curRun-1]; // current map (-1 because exp.curRun starts at 1 and indeces start at 0)
-    if (exp.curRun>1) {
-      exp.lastMap = exp.mapsVec[exp.curRun-2]; // exp.lastMap is the map before current one, perhaps can delete
-    } else { // still first run
-      exp.lastMap = -1;
+      exp.curRun = exp.history.maxRunsPerTask; // exp.curRun global that counts the runs - how many times did all the blocks/tasks complete.
+      exp.curMap = exp.mapsVec[exp.curRun-1]; // current map (-1 because exp.curRun starts at 1 and indeces start at 0)
+      if (exp.curRun>1) {
+        exp.lastMap = exp.mapsVec[exp.curRun-2]; // exp.lastMap is the map before current one, perhaps can delete
+      } else { // still first run
+        exp.lastMap = -1;
+      }
     }
-  }
 
-  // define graph (according to exp.curMap) - transition and adjacency matrices,
-  // and also emission matrix (which node corresponds to which image)
-  defineGraph();
-  save2subjectDetailsAndStartTimeTable();
+    // define graph (according to exp.curMap) - transition and adjacency matrices,
+    // and also emission matrix (which node corresponds to which image)
+    defineGraph();
+    save2subjectDetailsAndStartTimeTable();
 
-  /* change display */
-  document.getElementById("globalInstructions").style.display="inline";
-  document.getElementById("startTaskButton").style.display="inline";
+    /* change display */
+    document.getElementById("globalInstructions").style.display="inline";
+    document.getElementById("startTaskButton").style.display="inline";
 
   }
 
@@ -388,13 +366,13 @@
 
     // if there are no completed trials of learnRandomWalk yet, start intiialise variables and start learnRandomWalk task.
     // this is what will usually happen when a subject first starts the experiment.
-    if (exp.history.runNumOfLastTrialSaved2table[0]==0){
+    if (exp.history.runNumOfLastTrialSaved2table[0]==-1){
       // start first task - learnRandomWalk
       lrnWlkObj.trial = 1; // start from trial number 1.
       learnRandomWalkTask();
       // if some tasks have already been completed go backwards in the order of tasks, and check where the subject stopped
     } else if(exp.history.runNumOfLastTrialSaved2table[4]==exp.history.maxRunsPerTask){ // last recorded trial was of whichIsCloser task
-      numQ = getTrialNumFromTable("whichIsCloserTable"); //read the number of questions that was asked in the current block from the table of the distance estimation task - from sql
+      numQ = getParamOfLastTableRow("whichIsCloserTable","trial"); //read the number of questions that was asked in the current block from the table of the distance estimation task - from sql
       exp.totalScore=getScore("whichIsCloserTable"); // check the number of points that was earned until now
       if (numQ<qend){ // if the connection was terminated in the middle of whichIsCloser task, continue from the last trial
         whichCloserObj.numCorrect = calCorQ("whichIsCloserTable",exp.subjectId); // number of correct answers
@@ -410,17 +388,20 @@
           startWhichIsCloser(numQ);
         }else { // if the connection was terminated in the middle of navigation task, continue from the last trial
           exp.totalScore=getScore("navigTable");
-          var ntn = getTrialNumFromTable("navigTable");
-          startNavigTask(cds+1);
+          navigObj.trial = getParamOfLastTableRow("navigTable","trial");
+          navigObj.step = getParamOfLastTableRow("navigTable","step");
+          navigObj.curNode = getParamOfLastTableRow("navigTable","curNode");
+          navigObj.targetNode = getParamOfLastTableRow("navigTable","targetNode");
+          startNavigTask();
         }
       } else { // if exp.curRun>8, skip navigation task and go to whichIsClose
         startWhichIsCloser(0);
       }
-    } else if (exp.history.runNumOfLastTrialSaved2table[2]==exp.history.maxRunsPerTask) { // last recorded trial was of isItMiddle task
-      nrep=getTrialNumFromTable("isMiddleTable");
+    } else if (exp.history.runNumOfLastTrialSaved2table[2]==exp.history.maxRunsPerTask) { // last recorded trial was of isMiddle task
+      middleObj.trial=getParamOfLastTableRow("isMiddleTable","trial");
       exp.totalScore=getScore("isMiddleTable");
-      if(nrep<maxIsM){ // if isItMiddle was not completed, start from the last trial
-        isItMiddle(0); //***** Alon: what is the 0 here? shouldn't it be nrep (num of trials completed)? in the function it's called "nn"
+      if(middleObj.trial<middleObj.maxTrial){ // if isMiddle was not completed, start from the last trial
+        isMiddle();
       } else { // itMiddle was completed go to the next task
         if (exp.mapsVec[exp.curRun]!=exp.missLinkMapNum) { // using the full transMat, no missing links
           startNavigTask(2);
@@ -430,20 +411,21 @@
       }
 
     } else if(exp.history.runNumOfLastTrialSaved2table[1]==exp.history.maxRunsPerTask) { // last recorded trial was of piles task
-      pileObj.trial = getTrialNumFromTable("isInPileTable");// read the number of trials that the subject have already played in this run from the sql table
+      pileObj.trial = getParamOfLastTableRow("isInPileTable","trial");// read the number of trials that the subject have already played in this run from the sql table
       exp.totalScore=getScore("isInPileTable");
       if(pileObj.trial<maxPile){ // if isInPile task was not completed
         initPilesTask();
       } else { // if isInPile task was completed
-        isItMiddle(1);
+        isMiddle.
+        isMiddle(1);
       }
     } else if(exp.history.runNumOfLastTrialSaved2table[0]==exp.history.maxRunsPerTask) { // last recorded trial was of learning task
       exp.totalScore=getScore("whichIsCloserTable"); // there's no score change in the learning phase so get score from the last task of the previous run
       if (exp.mapsVec[exp.curRun]==exp.missLinkMapNum) { // with missing links
-        thisTC = getTrialNumFromTable("learnRandomPairsTable");
+        thisTC = getParamOfLastTableRow("learnRandomPairsTable","trial");
         learnRandomPairsTask(thisTC);// learning from pairs
       } else { // no missing links
-        thisTC = getTrialNumFromTable("learnRandomWalkTable");
+        thisTC = getParamOfLastTableRow("learnRandomWalkTable","trial");
         learnRandomWalkTask(thisTC); //learning from random walk (consecutive pairs)
       }
     }

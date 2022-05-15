@@ -98,14 +98,6 @@ div.endTask{
 
 /* learnRandomWalk part */
 
-#newM{
-  text-align: center;
-  position: relative;
-  top: 5px;
-  color: red;
-  font-size: 25px;
-}
-
 #lrnWlk_imgNew{
   position: relative;
   width: 140px;
@@ -123,14 +115,6 @@ div.endTask{
 
 
 /* learnRandomPairs part */
-
-#newMP{
-  text-align: center;
-  position: relative;
-  top: 5px;
-  color: red;
-  font-size: 25px;
-}
 
 #lrnPrs_img1{
   position: relative;
@@ -225,11 +209,39 @@ div.endTask{
   left:60px;
 }
 
-#enter2continueMsg_pile{
+/* isInMiddle task */
+#middle_img1{
+  width: 140px;
+  height: 140px;
+  border: 5px solid gray;
+}
+#middle_img2{
+  width: 140px;
+  height: 140px;
+  border: 5px solid gray;
+}
+#middle_imgMid{
+  width: 120px;
+  height: 120px;
+  border: 5px solid gray;
+}
+#middle_img1div{
+  float: left;
+  text-align: center;
+}
+#middle_img2div{
+  float: right;
+  text-align: center;
 
 }
-#isCorrectMsg_pile{
-
+#middle_imgMidDiv{
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-bottom: 60px;  
+}
+#middleButtonsDiv{
+  display: block;
 }
 
 
@@ -409,11 +421,7 @@ margin-top: 400px;
   bottom:50px;*/
 
 }
-#myCanvas{
-  position: absolute;
-  right: 0px;
-  bottom: 50px;
-}
+
 
 #chPicR1{
   /*position: relative;
@@ -493,70 +501,14 @@ margin-top: 400px;
   bottom: 250px;
 }
 
-#im1{
-  width: 140px;
-  height: 140px;
-  border: 5px solid gray;
-}
-#im2{
-  width: 140px;
-  height: 140px;
-  border: 5px solid gray;
-}
-#im3{
-  width: 100px;
-  height: 100px;
-  border: 5px solid gray;
-}
-#im1d{
-  position: relative;
-  left: 250px;
-  top: 50px;*/
-}
-#im2d{
-  position: relative;
-  right: 250px;
-  bottom: 170px;
-}
-#im3d{
-  position: relative;
-  /*left: 265px;*/
-  bottom: 230px;*/
-}
+
 #ynIsB{
   position: relative;
   left: 0px;
   bottom: 220px;
 }
-#im3cor{
-  position: relative;
-  left: 0px;
-  bottom: 100px;
-}
-#im3con{
-  position: relative;
-  left: 0px;
-  bottom: 100px;
-}
-/*#Nm{
-position: relative;
-left: 0px;
-top: 0px;
-}
-#Ym{
-position: relative;
-right: 0px;
-top: 0px;
-}*/
-#nextIsM{
-  position:fixed;
-  right: 950px;
-  bottom: 50px;
-}
-#isCrm{
-  font-family: serif;
-  font-size: 30px;
-}
+
+
 #cpicRMv{
   position: relative;
   bottom: 70px/*50px;*/

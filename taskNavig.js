@@ -1,33 +1,29 @@
-/*navigation task functions*/
+// Navigation task.
+// A trial is an entire walk on the graph - until you reach the target or the max number of steps.
+// Each trial consists of however many rounds/steps it takes the subject to reach the target (or the max num of steps)
+
 
 // dS is the initial distance - 2,3,4 for each trial of navigation. Check
-function startNavigTask(dS){ // formerly called startTask
+function startNavigTask(){ // formerly called startTask
+  navigObj.initDist = navigObj.initDistVec[navigObj.trial];
   setTimeout(function(){flagT=1}, 500);
   inLlast = -1;
   inRlast = -1;
   document.getElementById("conBot").disabled=true;
   ndS=dS;
   nthis = 0;
-//   clearCanvas(document.getElementById("myCanvas"),300,450);
-  ncoinT=0;
-  flagC=0;
-  flagSs=0;
-  flagSp=2;//signal that it is not pile part - important for the respose collecting function
-  flagIsM=-1;//signal that it is not IsM part
-  flagT = 1;
-  flagTr=1;//can get an answer
-  nRunsNavig = nRunsNavig+1;
+  navigObj.trial = navigObj.trial+1;
   document.getElementById("picT").style.display="inline";
   document.getElementById("targetPic").innerHTML="your target is:<br> ";
-  document.getElementById("isMiddle").style.display="none";
-  document.getElementById("pilesTab").style.display="none";
+  document.getElementsByClassName("isMiddle")[0].style.display="none";
+  document.getElementsByClassName("pileDiv")[0].style.display="none";
   document.getElementById("skip").style.display="inline";
   document.getElementById("tarPid").style.display="inline";
   document.getElementById("cPic").style.display="inline";
   document.getElementById("currPt").style.display="inline";
   document.getElementById("LbotT").style.display="inline";
   document.getElementById("RbotT").style.display="inline";
-  document.getElementById("navig").style.display="inline";
+  document.getElementsByClassName("navig")[0].style.display="inline";
   document.getElementById("dispPc").style.display="none";
   document.getElementsByClassName("endTask")[0].style.display="none";
   document.getElementById("endExpReachT").style.display="none";
@@ -49,12 +45,12 @@ function startNavigTask(dS){ // formerly called startTask
   /*stimulus blocks*/
   var j1,j2;
   inP = Math.floor(Math.random() * (G.nNodes));//current picture index
-  tar1 = findTargGen(dS,inP,G.distMat);//target picture index
+  tar1 = findTargGen(initDist,inP,G.distMat);//target picture index
   nSt = G.distMat[tar1][inP]; // CURRENT distance between target and current Pic
 
   // in the first run, showing them in each round what their current distance is, to explain the game
   if (exp.curRun==1){
-    document.getElementById("startPic").innerHTML="Your current card:<br>number steps to target is: <b>"+dS;
+    document.getElementById("startPic").innerHTML="Your current card:<br>number steps to target is: <b>"+navigObj.initDist;
   }else{
     document.getElementById("startPic").innerHTML="Your current card:<br>";
   }
@@ -158,7 +154,7 @@ function conExpT(cpic){// check subject choices
     document.getElementById("dispPc").style.display="none";
     document.getElementById("skip").style.display="none";
     document.getElementById("conBot").disabled=false;
-    totalStep = totalStep +c;
+    navigObj.stepsInTrial = navigObj.stepsInTrial +c;
     // not sure need this return - they move toi the next trial using a button,
     // this return is here just to make sure the current function doesn't do anything else.
     return;
@@ -203,8 +199,8 @@ function contT(docon){
     document.getElementById("dispPc").style.display="none";
     document.getElementById("skip").style.display="none";
 
-    if (ndS<maxdS){
-      startNavigTask(ndS+1); // ndS is number of navigation trials
+    if (navigObj.initDist<maxdS){
+      startNavigTask(navigObj.initDist+1); // ndS is number of navigation trials
     }else{
       document.getElementsByClassName("navig")[0].style.display="none";
       document.getElementById("conBot").disabled=false;
@@ -216,7 +212,7 @@ function contT(docon){
 function endAllTrials_navig(endB){// end navigation task function
   if(endB==1){
     var j;
-    var avlose = totalStep/nRunsNavig;
+    var avlose = navigObj.stepsInTrial/navigObj.trial;
     document.getElementsByClassName("navig")[0].style.display="none";
     document.getElementsByClassName("navig")[0].remove;
   }
