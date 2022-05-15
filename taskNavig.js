@@ -4,7 +4,7 @@
 
 
 // dS is the initial distance - 2,3,4 for each trial of navigation. Check
-function startNavigTask(){ // formerly called startTask
+function startNavigTask(dS){ // formerly called startTask
   navigObj.initDist = navigObj.initDistVec[navigObj.trial];
   setTimeout(function(){flagT=1}, 500);
   inLlast = -1;
@@ -15,15 +15,15 @@ function startNavigTask(){ // formerly called startTask
   navigObj.trial = navigObj.trial+1;
   document.getElementById("picT").style.display="inline";
   document.getElementById("targetPic").innerHTML="your target is:<br> ";
-  document.getElementsByClassName("isMiddle")[0].style.display="none";
-  document.getElementsByClassName("pileDiv")[0].style.display="none";
+  document.getElementById("isMiddleTab").style.display="none";
+  document.getElementById("pilesTab").style.display="none";
   document.getElementById("skip").style.display="inline";
   document.getElementById("tarPid").style.display="inline";
   document.getElementById("cPic").style.display="inline";
   document.getElementById("currPt").style.display="inline";
   document.getElementById("LbotT").style.display="inline";
   document.getElementById("RbotT").style.display="inline";
-  document.getElementsByClassName("navig")[0].style.display="inline";
+  document.getElementById("navig").style.display="inline";
   document.getElementById("dispPc").style.display="none";
   document.getElementsByClassName("endTask")[0].style.display="none";
   document.getElementById("endExpReachT").style.display="none";
@@ -45,7 +45,7 @@ function startNavigTask(){ // formerly called startTask
   /*stimulus blocks*/
   var j1,j2;
   inP = Math.floor(Math.random() * (G.nNodes));//current picture index
-  tar1 = findTargGen(initDist,inP,G.distMat);//target picture index
+  tar1 = findTargGen(dS,inP,G.distMat);//target picture index
   nSt = G.distMat[tar1][inP]; // CURRENT distance between target and current Pic
 
   // in the first run, showing them in each round what their current distance is, to explain the game
